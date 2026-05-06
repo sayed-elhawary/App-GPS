@@ -1,0 +1,70 @@
+{
+  "name": "nilemix",
+  "version": "1.0.0",
+  "description": "إدارة العلاقات العامة والأمن",
+  "author": "Elsayed Elhawary",
+  "main": "electron/main.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "concurrently \"npm run backend\" \"npm run frontend\" \"npm run electron-wait\"",
+    "backend": "nodemon backend/index.js",
+    "frontend": "cd frontend && npm start",
+    "electron": "electron .",
+    "electron-wait": "wait-on http://localhost:3000 && npm run electron",
+    "build:frontend": "cd frontend && npm run build",
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run build:frontend && npx electron-builder",
+    "dist": "npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^30.5.1",
+    "electron-builder": "^24.13.3",
+    "nodemon": "^3.1.0",
+    "rimraf": "^6.1.3",
+    "wait-on": "^8.0.5"
+  },
+  "build": {
+    "appId": "com.nilemix.app",
+    "productName": "إدارة العلاقات العامة والأمن",
+    "asar": false,
+    "directories": {
+      "output": "dist"
+    },
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "files": [
+      "electron/**/*",
+      "frontend/build/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.ico",
+      "signAndEditExecutable": false,
+      "verifyUpdateCodeSignature": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true
+    },
+    "mac": {
+      "identity": null,
+      "category": "public.app-category.business"
+    },
+    "forceCodeSigning": false,
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}"
+  }
+}
