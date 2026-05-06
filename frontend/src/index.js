@@ -1,4 +1,4 @@
-```js
+
 // ========== IMPORTS (لازم تكون في الأول) ==========
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -95,4 +95,4 @@ root.render(
     <App />
   </React.StrictMode>
 );
-```
+
